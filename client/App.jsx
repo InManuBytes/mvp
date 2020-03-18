@@ -23,9 +23,9 @@ class App extends Component {
           </div>
           <div className="column">
             <div className="ui search">
-              <div className="ui icon input">
-                <input class="prompt" type="text" placeholder="Twitter handle" />
-                <i class="feather icon" />
+              <div className="ui left icon input" data-tooltip="Enter a user's Twitter handle to begin">
+                <i class="at icon" />
+                <input class="prompt" type="text" placeholder="Twitter Handle" />
               </div>
             </div>
           </div>
