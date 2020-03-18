@@ -10,9 +10,9 @@ class App extends Component {
     return (
       <div className="ui container">
         <div className="ui segment">
-          <div className="ui middle aligned two column centered grid">
+          <div className="ui middle aligned centered grid">
             <div className="row">
-              <div className="column">
+              <div className="twelve wide column">
                 <h1 className="ui icon header">
                   <i className="crow icon"></i>
                   <div className="content">
@@ -23,17 +23,17 @@ class App extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="column">
+              <div className="twelve wide column">
                 <div className="ui search">
                   <div className="ui left icon input" data-tooltip="Enter a user's Twitter handle to begin">
-                    <i class="at icon" />
-                    <input class="prompt" type="text" placeholder="Twitter Handle" />
+                    <i className="at icon" />
+                    <input className="prompt" type="text" placeholder="Twitter Handle" />
                   </div>
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="column">
+              <div className="twelve wide column">
                 <button className="large ui button">
                   <i className="feather icon"></i>
                   Compose a Tweet-Ku
@@ -44,32 +44,24 @@ class App extends Component {
         </div>
         <div className="ui fluid raised card">
           <div className="content">
-            <div className="ui segments">
-              <div class="ui clearing basic segment">
-                <div class="ui left floated">
-                  <i className="quote left icon" />
-                </div>
+            <div className="ui grey inverted basic segment">
+              <div className="ui left floated">
+                <i className="quote left icon" />
               </div>
-              <div className="ui basic vertically fitted segment">
-                <div className="center aligned description">
-                  <p>
-                    The apparition of these faces in the crowd:
-                    Petals on a wet, black bough.
-                  </p>
-                </div>
-              </div>
-              <div class="ui clearing basic segment">
-                <div class="ui right floated">
-                  <i className="quote right icon" />
-                </div>
+              <div className="center aligned description">
+                <p>
+                  The apparition of these faces in the crowd:
+                  Petals on a wet, black bough.
+                  <div className="ui right floated">
+                    <i className="quote right icon" />
+                  </div>
+                </p>
               </div>
             </div>
             <div className="extra content">
-              <div className="center aligned author">
-                <a class="ui circular label">
-                  <i className="ui crow icon" />
-                  Ezra Pound
-                </a>
+              <div className="right aligned author">
+                <i className="ui crow icon" />
+                Ezra Pound
               </div>
             </div>
           </div>
