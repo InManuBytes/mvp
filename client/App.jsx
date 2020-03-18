@@ -45,17 +45,16 @@ class App extends Component {
         <div className="ui fluid raised card">
           <div className="content">
             <div className="ui grey inverted basic segment">
-              <div className="ui left floated">
-                <i className="quote left icon" />
-              </div>
               <div className="center aligned description">
-                <p>
-                  The apparition of these faces in the crowd:
-                  Petals on a wet, black bough.
-                  <div className="ui right floated">
-                    <i className="quote right icon" />
-                  </div>
-                </p>
+                <div className="ui left floated">
+                  <i className="quote left icon" />
+                </div>
+                {/* TODO make a list to split haiku sentences */}
+                The apparition of these faces in the crowd:
+                Petals on a wet, black bough.
+                <div className="ui right floated">
+                  <i className="quote right icon" />
+                </div>
               </div>
             </div>
             <div className="extra content">
