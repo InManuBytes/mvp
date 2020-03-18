@@ -53,7 +53,11 @@ class App extends Component {
                     Petals on a wet, black bough.
                   </p>
                 </div>
-                <i className="quote right icon" />
+              </div>
+              <div class="ui clearing basic segment">
+                <div class="ui right floated">
+                  <i className="quote right icon" />
+                </div>
               </div>
             </div>
             <div className="extra content">
