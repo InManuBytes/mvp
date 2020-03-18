@@ -45,8 +45,12 @@ class App extends Component {
         <div className="ui fluid raised card">
           <div className="content">
             <div className="ui segments">
-              <div className="ui segment">
-                <i className="quote left icon" />
+              <div class="ui clearing basic segment">
+                <div class="ui left floated">
+                  <i className="quote left icon" />
+                </div>
+              </div>
+              <div className="ui basic vertically fitted segment">
                 <div className="center aligned description">
                   <p>
                     The apparition of these faces in the crowd:
