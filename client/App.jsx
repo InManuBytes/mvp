@@ -19,11 +19,15 @@ class App extends Component {
     const { twitterHandle } = this.state;
     const { server } = this.props;
     return server.getHaiku(twitterHandle)
-      .then(haikuData => console.log(haikuData))
+      .then(haikuData => {
+        const latestHaiku = haikuData[0].haikus[0].text;
+        this.setState({ haiku: latestHaiku });
+      })
       .catch(err => console.log(err));
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* user interaction */}
