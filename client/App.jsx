@@ -4,8 +4,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    }
+      twitterHandle: '',
+      haiku: []
+    };
+    this.onChange = this.onChange.bind(this);
   }
+
+  onChange() {
+    console.log('entered text');
+  }
+
   render() {
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
@@ -32,7 +40,7 @@ class App extends Component {
                     <div className="ui search">
                       <div className="ui left icon input focus" data-tooltip="Enter a user's Twitter handle to begin">
                         <i className="at icon" />
-                        <input className="prompt" type="text" placeholder="Twitter Handle" />
+                        <input className="prompt" type="text" placeholder="Twitter Handle" onChange={this.onChange} />
                       </div>
                     </div>
                   </div>
@@ -61,10 +69,10 @@ class App extends Component {
                   <div className="ui left floated">
                     <i className="quote left icon" />
                   </div>
-                    <div class="ui list">
-                      <div class="item">The apparition of these faces in the crowd:</div>
-                      <div class="item">Petals on a wet,</div>
-                      <div class="item">black bough.</div>
+                    <div className="ui list">
+                      <div className="item">The apparition of these faces in the crowd:</div>
+                      <div className="item">Petals on a wet,</div>
+                      <div className="item">black bough.</div>
                     </div>
                   <div className="ui right floated">
                     <i className="quote right icon" />
