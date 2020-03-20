@@ -8,10 +8,16 @@ class App extends Component {
       haiku: []
     };
     this.onChange = this.onChange.bind(this);
+    this.getTweets = this.getTweets.bind(this);
   }
 
-  onChange() {
-    console.log('entered text');
+  onChange(e) {
+    this.setState({ twitterHandle: event.target.value })
+  }
+
+  getTweets() {
+    const { twitterHandle } = this.state;
+    console.log('getting tweets for: ', twitterHandle)
   }
 
   render() {
@@ -48,7 +54,7 @@ class App extends Component {
                 {/* Generate haiku button */}
                 <div className="row">
                   <div className="ui basic center aligned segment">
-                    <button className="ui large button">
+                    <button className="ui large button" onClick={this.getTweets}>
                       <i className="feather icon"></i>
                       Compose haiku
                     </button>
