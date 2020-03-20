@@ -1,11 +1,18 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const controller = require('./controller.js');
+const cors = require('cors');
 
-var app = express();
+const app = express();
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/../public'));
+
+app.get('/haikus/:user', controller.getHaiku);
 
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+app.listen(8080, function() {
+  console.log('listening on port 8080!');
 });
