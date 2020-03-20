@@ -1,0 +1,22 @@
+{
+  "users":[
+    {
+      "user": "ezra",
+      "haikus": [
+        {
+          "date": "2019-03-19T8:00:00:000Z",
+          "text": ["The apparition of these faces in the crowd:", "Petals on a wet,", "black bough."]
+        }
+      ]
+    },
+    {
+      "user": "manu",
+      "haikus": [
+        {
+          "date": "2019-03-19T8:00:00:000Z",
+          "text": ["The first rays of light.", "A constant shrill", "unable to wake up"]
+        }
+      ]
+    }
+  ]
+}
