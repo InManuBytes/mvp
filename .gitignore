@@ -1,5 +1,9 @@
 ### node ###
 
+# API key
+.env
+ibm-credentials.env
+
 # Coverage directory used by tools like istanbul
 coverage
 
