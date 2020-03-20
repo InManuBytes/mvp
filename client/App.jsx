@@ -6,15 +6,21 @@ class App extends Component {
     this.state = {
       twitterHandle: '',
       haiku: [],
-      showHaiku: false
+      showHaiku: false,
+      author: ''
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
     this.renderHaiku = this.renderHaiku.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   onInputChange(e) {
     this.setState({ twitterHandle: event.target.value })
+  }
+
+  reset() {
+    this.setState( {showHaiku } )
   }
 
   getTweets() {
@@ -23,13 +29,14 @@ class App extends Component {
     return server.getHaiku(twitterHandle)
       .then(haikuData => {
         const latestHaiku = haikuData[0].haikus[0].text;
-        this.setState({ haiku: latestHaiku, showHaiku: true });
+        const author = haikuData[0].user;
+        this.setState({ haiku: latestHaiku, showHaiku: true, author: author });
       })
       .catch(err => console.log(err));
   }
 
   renderHaiku() {
-    const { haiku, twitterHandle } = this.state;
+    const { haiku, author } = this.state;
     return (
       <div className="column" style={{ maxWidth: 450 }}>
           {/* haiku card */}
@@ -38,7 +45,7 @@ class App extends Component {
               {/* haiku */}
               <div className="ui grey inverted basic padded segment">
                 <div className="center aligned description">
-                  <div className="ui list" style={{ fontSize: '1.7rem' }}>
+                  <div className="ui list" style={{ fontSize: '2rem' }}>
                     <div className="ui left floated">
                       <i className="quote left icon" />
                     </div>
@@ -57,7 +64,7 @@ class App extends Component {
               <div className="extra content">
                 <div className="right aligned author">
                   <i className="ui crow icon" />
-                  {twitterHandle}
+                  {author}
                 </div>
               </div>
             </div>
