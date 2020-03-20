@@ -5,13 +5,15 @@ class App extends Component {
     super(props);
     this.state = {
       twitterHandle: '',
-      haiku: []
+      haiku: [],
+      showHaiku: false
     };
-    this.onChange = this.onChange.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
+    this.renderHaiku = this.renderHaiku.bind(this);
   }
 
-  onChange(e) {
+  onInputChange(e) {
     this.setState({ twitterHandle: event.target.value })
   }
 
@@ -21,12 +23,51 @@ class App extends Component {
     return server.getHaiku(twitterHandle)
       .then(haikuData => {
         const latestHaiku = haikuData[0].haikus[0].text;
-        this.setState({ haiku: latestHaiku });
+        this.setState({ haiku: latestHaiku, showHaiku: true });
       })
       .catch(err => console.log(err));
   }
 
+  renderHaiku() {
+    const { haiku, twitterHandle } = this.state;
+    return (
+      <div className="column" style={{ maxWidth: 450 }}>
+          {/* haiku card */}
+          <div className="ui fluid raised card">
+            <div className="content">
+              {/* haiku */}
+              <div className="ui grey inverted basic padded segment">
+                <div className="center aligned description">
+                  <div className="ui list" style={{ fontSize: '1.7rem' }}>
+                    <div className="ui left floated">
+                      <i className="quote left icon" />
+                    </div>
+                    {haiku.map((line, idx) => {
+                      return <div key={idx} className="item">{line}</div>
+                    })}
+                    <div className="ui right floated">
+                      <i className="quote right icon" />
+                    </div>
+                    {/* not sure how else to fix the bottom of the right quote touching the bottom of the segment */}
+                    <div className="item"></div>
+                  </div>
+                </div>
+              </div>
+              {/* author */}
+              <div className="extra content">
+                <div className="right aligned author">
+                  <i className="ui crow icon" />
+                  {twitterHandle}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  }
+
   render() {
+    const { showHaiku } = this.state;
     console.log(this.state);
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
@@ -53,7 +94,7 @@ class App extends Component {
                     <div className="ui search">
                       <div className="ui left icon input focus" data-tooltip="Enter a user's Twitter handle to begin">
                         <i className="at icon" />
-                        <input className="prompt" type="text" placeholder="Twitter Handle" onChange={this.onChange} />
+                        <input className="prompt" type="text" placeholder="Twitter Handle" onChange={this.onInputChange} />
                       </div>
                     </div>
                   </div>
@@ -71,37 +112,8 @@ class App extends Component {
             </div>
           </div>
         </div>
-        {/* Generated haku */}
-        <div className="column" style={{ maxWidth: 450 }}>
-          {/* haiku card */}
-          <div className="ui fluid raised card">
-            <div className="content">
-              {/* haiku */}
-              <div className="ui grey inverted basic segment">
-                <div className="center aligned description">
-                  <div className="ui left floated">
-                    <i className="quote left icon" />
-                  </div>
-                    <div className="ui list">
-                      <div className="item">The apparition of these faces in the crowd:</div>
-                      <div className="item">Petals on a wet,</div>
-                      <div className="item">black bough.</div>
-                    </div>
-                  <div className="ui right floated">
-                    <i className="quote right icon" />
-                  </div>
-                </div>
-              </div>
-              {/* author */}
-              <div className="extra content">
-                <div className="right aligned author">
-                  <i className="ui crow icon" />
-                  Ezra Pound
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Generated haku only generate if there is data to generate */}
+        {showHaiku ? this.renderHaiku() : null}
       </div>
     );
   }
