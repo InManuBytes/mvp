@@ -17,7 +17,10 @@ class App extends Component {
 
   getTweets() {
     const { twitterHandle } = this.state;
-    console.log('getting tweets for: ', twitterHandle)
+    const { server } = this.props;
+    return server.getHaiku(twitterHandle)
+      .then(haikuData => console.log(haikuData))
+      .catch(err => console.log(err));
   }
 
   render() {
