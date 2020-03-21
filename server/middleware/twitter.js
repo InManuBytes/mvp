@@ -10,10 +10,10 @@ var auth = {
 var client = new Twitter(auth);
 
 const getTweets = (req, res, next) => {
-  console.log('getting tweets');
+  console.log('getting tweets for', req.params.user);
   const params = {
-    screen_name: 'nodejs',
-    count: 5
+    screen_name: 'nodejs', // TODO use actual twitter handle
+    count: 50 // TODO change the count to 50 or more
   };
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (error) {
