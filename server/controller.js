@@ -12,6 +12,9 @@ module.exports = {
      *            object
      */
     const firstLine = _.sample(objects);
+    const firstObjIdx = objects.indexOf(firstLine);
+    // make sure the first object can't be repeated
+    objects.splice(firstObjIdx, 1);
     const secondLine = `${_.sample(subjects)} ${_.sample(actions)}`;
     const lastLine = _.sample(objects);
     const haiku = [firstLine, secondLine, lastLine];
@@ -19,7 +22,6 @@ module.exports = {
       user: req.params.user,
       haiku
     };
-    console.log(randomHaiku);
     res.status(200).json(randomHaiku);
     next();
   }
