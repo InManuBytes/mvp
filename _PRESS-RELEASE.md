@@ -16,11 +16,11 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
 
-## Tweet-powered haiku generator ##
+## Tweet-powered AI haiku generator ##
   Generate a haiku from a Twitter user's most recent tweets.
 
 ## Summary ##
-  Powered by artificial intelligence, tweets and haiku magic, Tweet-ku generates experimental haikus to spark reflection and allow us to see past the mundane.
+  Powered by artificial intelligence, tweets and haiku magic, Tweet-Ku generates experimental haikus to spark reflection and allow us to see past the mundane.
 
 ## Problem ##
   Find original, minimal poetry behind any twitter noise.
@@ -36,7 +36,8 @@ Once the project moves into development, the press release can be used as a touc
   Type in a public Twitter handle and click on generate. Once your haiku is generated you can share it back to twitter for meta-recycling.
 
 ## Customer Quote ##
-  > I never thought my daily twitter banter had so much depth.
+  > "I never thought my daily twitter banter had so much depth."
+  > -Random twitter user
 
 ## Closing and Call to Action ##
   What are you waiting for? Generate your first haiku to see how deep the twitter sphere goes.
