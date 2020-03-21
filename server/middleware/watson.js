@@ -13,12 +13,34 @@ const analyzeTweets = (req, res, next) => {
   };
   naturalLanguageUnderstanding.analyze(analyzeParams)
   .then(analysisResults => {
+    // get the array of sentences
     const sentences = analysisResults.result.semantic_roles;
-    const allSubjects = sentences.map(sentence => {
-      return _.toLower(sentence.subject.text);
+    // initialize storage for our roles
+    const subjects = [];
+    const objects = [];
+    const actions = [];
+    // filter and sort unique roles
+    sentences.forEach(sentence => {
+      const currentSubject = _.toLower(sentence.subject.text);
+      if (_.indexOf(subjects, currentSubject) === -1) {
+        subjects.push(currentSubject);
+      }
+      const currentObject = sentence.object ? _.toLower(sentence.object.text) : null;
+      if (_.indexOf(objects, currentObject) === -1) {
+        objects.push(currentObject);
+      }
+      const currentAction = _.toLower(sentence.action.text);
+      if (_.indexOf(actions, currentAction) === -1) {
+        actions.push(currentAction);
+      }
     });
-    const uniqueSubjects = _.uniq(allSubjects);
-    console.log(JSON.stringify(uniqueSubjects));
+    const analysis = {
+      subjects,
+      objects,
+      actions
+    }
+    // add the anaylsis to the req for further processing
+    req.analysis = analysis
     next();
   })
   .catch(err => {
