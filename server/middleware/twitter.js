@@ -11,12 +11,21 @@ var client = new Twitter(auth);
 
 const getTweets = (req, res, next) => {
   console.log('getting tweets');
-  const params = {screen_name: 'nodejs'};
+  const params = {
+    screen_name: 'nodejs',
+    count: 5
+  };
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
-    if (!error) {
-      console.log(tweets);
+    if (error) {
+      // send back in the response and don't process req
+      res.status(404).send(error);
     } else {
-      req.tweets = tweets;
+      // tweets come back in an array, so we want to filter out for text
+      const tweetTexts = tweets.map((tweetObj) => {
+        return tweetObj.text
+      })
+      // attach them to the request for the next step
+      req.tweets = tweetTexts.join('. ');
       next();
     }
   });
