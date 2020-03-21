@@ -27,7 +27,15 @@ const analyzeTweets = (req, res, next) => {
       }
       const currentObject = sentence.object ? _.toLower(sentence.object.text) : null;
       if (_.indexOf(objects, currentObject) === -1) {
-        objects.push(currentObject);
+        // make sure we don't add links
+        const link = /https.+(?= |\b)/g;
+        const ellipsis = /…/g;
+        const noEllipsis = _.replace(currentObject, ellipsis, '');
+        const cleanObject = _.replace(noEllipsis, link, '');
+        console.log('object before: ', currentObject, ' object after: ', cleanObject);
+        if (cleanObject.length > 1) {
+          objects.push(cleanObject);
+        }
       }
       const currentAction = _.toLower(sentence.action.text);
       if (_.indexOf(actions, currentAction) === -1) {
