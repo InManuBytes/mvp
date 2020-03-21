@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { trackPromise } from 'react-promise-tracker';
+import LoadingIndicator from './Loading';
 
 class App extends Component {
   constructor(props) {
@@ -21,39 +23,23 @@ class App extends Component {
   getTweets() {
     const { twitterHandle } = this.state;
     const { server } = this.props;
-    this.renderHaiku(true);
-    return server.getHaiku(twitterHandle)
-      .then(haikuData => {
-        console.log(haikuData);
-        let latestHaiku = haikuData.haiku;
-        let author = haikuData.user;
-        if (haikuData.status === 400) {
-          latestHaiku = [`${haikuData.code} ERROR: ${haikuData.statusText}`, haikuData.message];
-          author = 'IBM WATSON';
-        }
-        this.setState({ haiku: latestHaiku, showHaiku: true, author: author });
-      })
-      .catch(err => console.log(err));
+    trackPromise(
+      server.getHaiku(twitterHandle)
+        .then(haikuData => {
+          console.log(haikuData);
+          let latestHaiku = haikuData.haiku;
+          let author = haikuData.user;
+          if (haikuData.status === 400) {
+            latestHaiku = [`${haikuData.code} ERROR: ${haikuData.statusText}`, haikuData.message];
+            author = 'IBM WATSON';
+          }
+          this.setState({ haiku: latestHaiku, showHaiku: true, author: author });
+        })
+        .catch(err => console.log(err)));
   }
 
-  renderHaiku(loading) {
-    // TODO show a loader when generating a haiku
+  renderHaiku() {
     const { haiku, author } = this.state;
-    if (loading) {
-      return (
-        <div className="column" style={{ maxWidth: 450 }}>
-          <div className="ui fluid raised card">
-            <div className="content">
-              <div className="ui segment">
-                <div className="ui active dimmer">
-                  <div className="ui text loader">Composing Tweet-Ku</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className="column" style={{ maxWidth: 450 }}>
           {/* haiku card */}
@@ -134,6 +120,7 @@ class App extends Component {
                 </div>
               </div>
             </div>
+            <LoadingIndicator />
           </div>
         </div>
         {/* Generated haku only generate if there is data to generate */}
