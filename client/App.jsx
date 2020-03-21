@@ -78,7 +78,6 @@ class App extends Component {
 
   render() {
     const { showHaiku } = this.state;
-    console.log(this.state);
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* user interaction */}
