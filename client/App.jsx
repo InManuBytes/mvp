@@ -28,8 +28,9 @@ class App extends Component {
     const { server } = this.props;
     return server.getHaiku(twitterHandle)
       .then(haikuData => {
-        const latestHaiku = haikuData[0].haikus[0].text;
-        const author = haikuData[0].user;
+        console.log(haikuData);
+        const latestHaiku = haikuData.haiku;
+        const author = haikuData.user;
         this.setState({ haiku: latestHaiku, showHaiku: true, author: author });
       })
       .catch(err => console.log(err));
