@@ -5,7 +5,7 @@ const LoadingIndicator = props => {
   const { promiseInProgress } = usePromiseTracker();
   return (
     promiseInProgress &&
-    <h1>Async call in progress</h1>
+    <div className="ui active centered inline text slow loader">Contacting the muses</div>
   );
 }
 
