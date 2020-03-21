@@ -29,9 +29,9 @@ const analyzeTweets = (req, res, next) => {
       if (_.indexOf(objects, currentObject) === -1) {
         // make sure we don't add links
         const link = /https.+(?= |\b)/g;
-        const ellipsis = /…/g;
-        const noEllipsis = _.replace(currentObject, ellipsis, '');
-        const cleanObject = _.replace(noEllipsis, link, '');
+        const nonsense = /…|&amp|@|#/g;
+        const noNonsense = _.replace(currentObject, nonsense, '');
+        const cleanObject = _.replace(noNonsense, link, '');
         console.log('object before: ', currentObject, ' object after: ', cleanObject);
         if (cleanObject.length > 1) {
           objects.push(cleanObject);
