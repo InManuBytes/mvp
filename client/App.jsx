@@ -37,6 +37,7 @@ class App extends Component {
   }
 
   renderHaiku() {
+    // TODO show a loader when generating a haiku
     const { haiku, author } = this.state;
     return (
       <div className="column" style={{ maxWidth: 450 }}>
@@ -46,7 +47,7 @@ class App extends Component {
               {/* haiku */}
               <div className="ui grey inverted basic padded segment">
                 <div className="center aligned description">
-                  <div className="ui list" style={{ fontSize: '2rem' }}>
+                  <div className="ui list" style={{ fontSize: '1.7rem' }}>
                     <div className="ui left floated">
                       <i className="quote left icon" />
                     </div>
