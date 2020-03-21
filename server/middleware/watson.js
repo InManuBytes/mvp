@@ -21,15 +21,21 @@ const analyzeTweets = (req, res, next) => {
     const actions = [];
     // filter and sort unique roles
     sentences.forEach(sentence => {
+      const users = /@.+(?= |\b)/g;
       const currentSubject = sentence.subject ? _.toLower(sentence.subject.text) : null;
-      if (_.indexOf(subjects, currentSubject) === -1) {
-        subjects.push(currentSubject);
+      const subHasUser = users.test(currentSubject);
+      if (_.indexOf(subjects, currentSubject) === -1 && !subHasUser) {
+        // get rid of nonsense
+        const nonsense = /…|&amp|f\d/g;
+        const noNonsenseSub = _.replace(currentSubject, nonsense, '');
+        subjects.push(noNonsenseSub);
       }
       const currentObject = sentence.object ? _.toLower(sentence.object.text) : null;
-      if (_.indexOf(objects, currentObject) === -1) {
-        // make sure we don't add links
+      const objHasUser = users.test(currentObject);
+      if (_.indexOf(objects, currentObject) === -1 && !objHasUser) {
+        // make sure we don't add links or nonsense
         const link = /https.+(?= |\b)/g;
-        const nonsense = /…|&amp|@|#/g;
+        const nonsense = /…|&amp|in the|as a/g;
         const noNonsense = _.replace(currentObject, nonsense, '');
         const cleanObject = _.replace(noNonsense, link, '');
         if (cleanObject.length > 1) {
@@ -52,7 +58,7 @@ const analyzeTweets = (req, res, next) => {
   })
   .catch(err => {
     console.log(err);
-    res.status(404).send(err);
+    res.status(404).json(err);
   });
 }
 
