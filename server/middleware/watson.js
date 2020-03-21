@@ -17,8 +17,8 @@ const analyzeTweets = (req, res, next) => {
     const allSubjects = sentences.map(sentence => {
       return _.toLower(sentence.subject.text);
     });
-    // const uniqueSubjects = allSubjects.
-    console.log(JSON.stringify(allSubjects));
+    const uniqueSubjects = _.uniq(allSubjects);
+    console.log(JSON.stringify(uniqueSubjects));
     next();
   })
   .catch(err => {
