@@ -5,7 +5,7 @@ const Server = {
     const searchURL = Server.address + queryString;
     return fetch(searchURL)
       .then(result =>  result.json())
-      .catch(err => console.log(err));
+      .catch(err => console.log('ERROR WITH REQ', err));
   }
 }
 
