@@ -21,7 +21,7 @@ const analyzeTweets = (req, res, next) => {
     const actions = [];
     // filter and sort unique roles
     sentences.forEach(sentence => {
-      const currentSubject = _.toLower(sentence.subject.text);
+      const currentSubject = sentence.subject ? _.toLower(sentence.subject.text) : null;
       if (_.indexOf(subjects, currentSubject) === -1) {
         subjects.push(currentSubject);
       }
@@ -32,12 +32,11 @@ const analyzeTweets = (req, res, next) => {
         const nonsense = /…|&amp|@|#/g;
         const noNonsense = _.replace(currentObject, nonsense, '');
         const cleanObject = _.replace(noNonsense, link, '');
-        console.log('object before: ', currentObject, ' object after: ', cleanObject);
         if (cleanObject.length > 1) {
           objects.push(cleanObject);
         }
       }
-      const currentAction = _.toLower(sentence.action.text);
+      const currentAction = sentence.action ? _.toLower(sentence.action.text) : null;
       if (_.indexOf(actions, currentAction) === -1) {
         actions.push(currentAction);
       }
