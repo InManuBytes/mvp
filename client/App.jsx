@@ -12,33 +12,48 @@ class App extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
     this.renderHaiku = this.renderHaiku.bind(this);
-    this.reset = this.reset.bind(this);
   }
 
   onInputChange(e) {
     this.setState({ twitterHandle: event.target.value })
   }
 
-  reset() {
-    this.setState( {showHaiku } )
-  }
-
   getTweets() {
     const { twitterHandle } = this.state;
     const { server } = this.props;
+    this.renderHaiku(true);
     return server.getHaiku(twitterHandle)
       .then(haikuData => {
         console.log(haikuData);
-        const latestHaiku = haikuData.haiku;
-        const author = haikuData.user;
+        let latestHaiku = haikuData.haiku;
+        let author = haikuData.user;
+        if (haikuData.status === 400) {
+          latestHaiku = [`${haikuData.code} ERROR: ${haikuData.statusText}`, haikuData.message];
+          author = 'IBM WATSON';
+        }
         this.setState({ haiku: latestHaiku, showHaiku: true, author: author });
       })
       .catch(err => console.log(err));
   }
 
-  renderHaiku() {
+  renderHaiku(loading) {
     // TODO show a loader when generating a haiku
     const { haiku, author } = this.state;
+    if (loading) {
+      return (
+        <div className="column" style={{ maxWidth: 450 }}>
+          <div className="ui fluid raised card">
+            <div className="content">
+              <div className="ui segment">
+                <div className="ui active dimmer">
+                  <div className="ui text loader">Composing Tweet-Ku</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="column" style={{ maxWidth: 450 }}>
           {/* haiku card */}
@@ -91,7 +106,7 @@ class App extends Component {
                     <i className="crow icon"></i>
                     <div className="content">
                       Tweet-Ku
-                      <div className="sub header">Tweet-powered haiku generator</div>
+                      <div className="sub header">Tweet-powered AI haiku generator</div>
                     </div>
                   </h1>
                 </div>
