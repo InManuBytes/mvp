@@ -10,15 +10,16 @@ var auth = {
 var client = new Twitter(auth);
 
 const getTweets = (req, res, next) => {
-  console.log('getting tweets for', req.params.user);
+  const twitterHandle = req.params.user
+  console.log('getting tweets for', twitterHandle);
   const params = {
-    screen_name: 'nodejs', // TODO use actual twitter handle
-    count: 50 // TODO change the count to 50 or more
+    screen_name: twitterHandle,
+    count: 50
   };
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (error) {
       // send back in the response and don't process req
-      res.status(404).send(error);
+      res.status(404).send(new Error('Could not get tweets for twitterHandle'));
     } else {
       // tweets come back in an array, so we want to filter out for text
       const tweetTexts = tweets.map((tweetObj) => {
