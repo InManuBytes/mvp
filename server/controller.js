@@ -20,10 +20,10 @@ const searchDictionary = (word) => {
   const options = {
     depth: 8
   }
-  const lookup = dictionary.lookup(cleanWord, options);
+  const lookup = dictionary.lookup(word, options);
   // make sure if it is modified with suffix it's not being excluded
   const suffix = /(s|ing|ed|ly)$/g;
-  const singularWord = cleanWord.replace(suffix, '');
+  const singularWord = word.replace(suffix, '');
   const singularLookup = dictionary.lookup(singularWord);
   if (lookup.found || singularLookup.found || (exceptions.indexOf(word) > -1)) {
     // if it's found just return the original word
