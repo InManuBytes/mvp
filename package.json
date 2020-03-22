@@ -47,6 +47,7 @@
     "dotenv": "^8.2.0",
     "ibm-watson": "^5.4.0",
     "lodash": "^4.17.15",
+    "spelling": "^2.0.2",
     "twitter": "^1.7.1"
   }
 }
