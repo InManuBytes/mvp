@@ -34,4 +34,8 @@ const getTweets = (req, res, next) => {
   });
 }
 
-module.exports = { getTweets };
+const postHaiku = (req, res, next) => {
+  console.log('posting to twitter')
+}
+
+module.exports = { getTweets, postHaiku };
