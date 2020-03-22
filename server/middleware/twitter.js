@@ -14,7 +14,7 @@ const getTweets = (req, res, next) => {
   console.log('getting tweets for', twitterHandle);
   const params = {
     screen_name: twitterHandle,
-    count: 100
+    count: 200
   };
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (error) {
