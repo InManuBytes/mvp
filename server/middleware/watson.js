@@ -23,7 +23,7 @@ const analyzeTweets = (req, res, next) => {
     sentences.forEach(sentence => {
       const users = /@.+(?= |\b)/g;
       const link = /http.+(?= |\b)/g;
-      const nonsense = /…|&amp|in the|as a/g;
+      const nonsense = /…|&amp/g;
       const currentSubject = sentence.subject ? _.toLower(sentence.subject.text) : null;
       const subHasUser = users.test(currentSubject);
       if (_.indexOf(subjects, currentSubject) === -1 && !subHasUser) {
