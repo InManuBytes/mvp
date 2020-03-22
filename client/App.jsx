@@ -14,6 +14,7 @@ class App extends Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
     this.renderHaiku = this.renderHaiku.bind(this);
+    this.postHaiku = this.postHaiku.bind(this);
   }
 
   onInputChange(e) {
@@ -38,41 +39,49 @@ class App extends Component {
         .catch(err => console.log(err)));
   }
 
+  postHaiku() {
+    const { server } = this.props;
+    server.postHaiku()
+      .then(postData => {
+        console.log(postData);
+      })
+  }
+
   renderHaiku() {
     const { haiku, author } = this.state;
     return (
       <div className="column" style={{ maxWidth: 450 }}>
-          {/* haiku card */}
-          <div className="ui fluid raised card">
-            <div className="content">
-              {/* haiku */}
-              <div className="ui grey inverted basic padded segment">
-                <div className="center aligned description">
-                  <div className="ui list" style={{ fontSize: '1.7rem' }}>
-                    <div className="ui left floated">
-                      <i className="quote left icon" />
-                    </div>
-                    {haiku.map((line, idx) => {
-                      return <div key={idx} className="item">{line}</div>
-                    })}
-                    <div className="ui right floated">
-                      <i className="quote right icon" />
-                    </div>
-                    {/* not sure how else to fix the bottom of the right quote touching the bottom of the segment */}
-                    <div className="item"></div>
+        {/* haiku card */}
+        <div className="ui fluid raised card">
+          <div className="content">
+            {/* haiku */}
+            <div className="ui grey inverted basic padded segment">
+              <div className="center aligned description">
+                <div className="ui list" style={{ fontSize: '1.7rem' }}>
+                  <div className="ui left floated">
+                    <i className="quote left icon" />
                   </div>
+                  {haiku.map((line, idx) => {
+                    return <div key={idx} className="item">{line}</div>
+                  })}
+                  <div className="ui right floated">
+                    <i className="quote right icon" />
+                  </div>
+                  {/* not sure how else to fix the bottom of the right quote touching the bottom of the segment */}
+                  <div className="item"></div>
                 </div>
               </div>
-              {/* author */}
-              <div className="extra content">
-                <div className="right aligned author">
-                  <i className="ui crow icon" />
-                  {author}
-                </div>
+            </div>
+            {/* author */}
+            <div className="extra content">
+              <div className="right aligned author">
+                <i className="ui crow icon" />
+                {author}
               </div>
             </div>
           </div>
         </div>
+      </div>
     );
   }
 
@@ -117,6 +126,10 @@ class App extends Component {
                 </div>
               </div>
             </div>
+            <button className="ui fluid button" onClick={this.postHaiku}>
+              <i className="twitter icon"></i>
+              Share on Twitter
+            </button>
           </div>
         </div>
         {/* Generated haku only generate if there is data to generate */}
