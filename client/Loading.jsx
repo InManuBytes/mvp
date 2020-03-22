@@ -1,12 +1,19 @@
 import React from 'react';
 import { usePromiseTracker } from 'react-promise-tracker';
 
-const LoadingIndicator = props => {
+const HaikuLoadingIndicator = ({ onClick }) => {
   const { promiseInProgress } = usePromiseTracker();
+  if (promiseInProgress) {
+    return (
+      <div className="ui active centered inline text slow loader">Contacting the muses</div>
+    );
+  }
   return (
-    promiseInProgress &&
-    <div className="ui active centered inline text slow loader">Contacting the muses</div>
+    <button className="ui large button" onClick={onClick}>
+      <i className="feather icon"></i>
+      Compose haiku
+    </button>
   );
 }
 
-export default LoadingIndicator;
+export default HaikuLoadingIndicator;

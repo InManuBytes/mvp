@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { trackPromise } from 'react-promise-tracker';
-import LoadingIndicator from './Loading';
+import HaikuLoadingIndicator from './Loading';
 
 class App extends Component {
   constructor(props) {
@@ -108,18 +108,15 @@ class App extends Component {
                     </div>
                   </div>
                 </div>
-                {/* Generate haiku button */}
+                {/* Generate haiku button or loading while generating tweets */}
                 <div className="row">
                   <div className="ui basic center aligned segment">
-                    <button className="ui large button" onClick={this.getTweets}>
-                      <i className="feather icon"></i>
-                      Compose haiku
-                    </button>
+                    {/* Button or Loading */}
+                    <HaikuLoadingIndicator onClick={this.getTweets} />
                   </div>
                 </div>
               </div>
             </div>
-            <LoadingIndicator />
           </div>
         </div>
         {/* Generated haku only generate if there is data to generate */}
