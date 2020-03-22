@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../public'));
 
 app.get('/haikus/:user', twitter.getTweets, watson.analyzeTweets, controller.getHaiku);
-
+app.post('/haikus/share', twitter.postHaiku)
 
 app.listen(8080, function() {
   console.log('listening on port 8080!');
