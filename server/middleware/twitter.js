@@ -2,10 +2,12 @@ require('dotenv').config();
 var Twitter = require('twitter');
 
 var auth = {
-  consumer_key: process.env.API_KEY,
-  consumer_secret: process.env.API_SECRET_KEY,
-  bearer_token: process.env.BEARER_TOKEN
-}
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  bearer_token: process.env.BEARER_TOKEN,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+};
 
 var client = new Twitter(auth);
 
