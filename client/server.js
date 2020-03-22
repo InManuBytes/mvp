@@ -6,6 +6,16 @@ const Server = {
     return fetch(searchURL)
       .then(result =>  result.json())
       .catch(err => console.log('ERROR WITH REQ', err));
+  },
+  postHaiku: () => {
+    const postURL = `${Server.address}/share`;
+    const postOptions = {
+      method: 'post',
+      body: JSON.stringify('Hello World')
+    };
+    return fetch(postURL, postOptions)
+      .then(result => result.json())
+      .catch(err => console.log('ERROR POSTING ', err));
   }
 }
 
