@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import HaikuLoadingIndicator from './Loading';
+import ShareModal from './ShareModal';
 
 class App extends Component {
   constructor(props) {
@@ -9,12 +10,15 @@ class App extends Component {
       twitterHandle: '',
       haiku: [],
       showHaiku: false,
-      author: ''
+      author: '',
+      cardURL: '',
+      showShareModal: false,
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
     this.renderHaiku = this.renderHaiku.bind(this);
     this.postHaiku = this.postHaiku.bind(this);
+    this.showShareModal = this.showShareModal.bind(this);
   }
 
   onInputChange(e) {
@@ -48,8 +52,15 @@ class App extends Component {
         return server.postHaiku(imageBlob, haiku, author)
       })
       .then(postData => {
-        console.log(postData);
+        const cardURL = postData.entities.media[0].url;
+        console.log('Got image url: ', cardURL);
+        this.showShareModal(cardURL);
       })
+  }
+
+  showShareModal(cardURL) {
+    console.log('rendering modal for: ', cardURL)
+    this.setState({ showShareModal: true, cardURL})
   }
 
   renderHaiku() {
@@ -91,7 +102,7 @@ class App extends Component {
   }
 
   render() {
-    const { showHaiku } = this.state;
+    const { showHaiku, showShareModal, cardURL } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* user interaction */}
@@ -115,7 +126,7 @@ class App extends Component {
                 <div className="row">
                   <div className="ui basic center aligned segment">
                     <div className="ui search">
-                      <div className="ui left icon input focus" data-tooltip="Enter a user's Twitter handle to begin">
+                      <div className="ui left icon input focus" data-tooltip="Enter a public Twitter handle to begin">
                         <i className="at icon" />
                         <input className="prompt" type="text" placeholder="Twitter Handle" onChange={this.onInputChange} />
                       </div>
@@ -131,9 +142,10 @@ class App extends Component {
                 </div>
               </div>
             </div>
-            <button className="ui fluid button" onClick={this.postHaiku}>
-              <i className="twitter icon"></i>
-              Share on Twitter
+            <ShareModal show={showShareModal} url={cardURL} />
+            <button className="ui fluid blue basic button" onClick={this.postHaiku}>
+              <i className="share square icon"></i>
+              Share
             </button>
           </div>
         </div>
