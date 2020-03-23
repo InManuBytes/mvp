@@ -13,12 +13,14 @@ class App extends Component {
       author: '',
       cardURL: '',
       showShareModal: false,
+      clickedShare: 0,
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
     this.renderHaiku = this.renderHaiku.bind(this);
     this.postHaiku = this.postHaiku.bind(this);
     this.showShareModal = this.showShareModal.bind(this);
+    this.closeShareModal = this.closeShareModal.bind(this);
   }
 
   onInputChange(e) {
@@ -26,7 +28,7 @@ class App extends Component {
   }
 
   getTweets() {
-    const { twitterHandle } = this.state;
+    const { twitterHandle, clickedShare } = this.state;
     const { server } = this.props;
     trackPromise(
       server.getHaiku(twitterHandle)
@@ -38,29 +40,38 @@ class App extends Component {
             latestHaiku = [`${haikuData.code} ERROR: ${haikuData.statusText}`, haikuData.message];
             author = 'IBM WATSON';
           }
-          this.setState({ haiku: latestHaiku, showHaiku: true, author: author });
+          this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0 });
         })
         .catch(err => console.log(err)));
   }
 
   postHaiku() {
     const { server, makeHaikuCard } = this.props;
-    const { haiku, author } = this.state;
-    makeHaikuCard()
-      .then(imageBlob => {
-        console.log('2. sending haiku data back to server');
-        return server.postHaiku(imageBlob, haiku, author)
-      })
-      .then(postData => {
-        const cardURL = postData.entities.media[0].url;
-        console.log('Got image url: ', cardURL);
-        this.showShareModal(cardURL);
-      })
+    const { haiku, author, clickedShare, cardURL } = this.state;
+    if (!clickedShare) {
+      makeHaikuCard()
+        .then(imageBlob => {
+          console.log('2. sending haiku data back to server');
+          return server.postHaiku(imageBlob, haiku, author)
+        })
+        .then(postData => {
+          const cardURL = postData.entities.media[0].url;
+          console.log('Got image url: ', cardURL);
+          this.showShareModal(cardURL);
+        })
+    } else {
+      this.showShareModal(cardURL);
+    }
   }
 
   showShareModal(cardURL) {
     console.log('rendering modal for: ', cardURL)
-    this.setState({ showShareModal: true, cardURL})
+    const { clickedShare } = this.state;
+    this.setState({ showShareModal: true, cardURL, clickedShare: clickedShare + 1 })
+  }
+
+  closeShareModal() {
+    this.setState({ showShareModal: false })
   }
 
   renderHaiku() {
@@ -142,7 +153,7 @@ class App extends Component {
                 </div>
               </div>
             </div>
-            <ShareModal show={showShareModal} url={cardURL} />
+            <ShareModal show={showShareModal} url={cardURL} close={this.closeShareModal} />
             <button className="ui fluid blue basic button" onClick={this.postHaiku}>
               <i className="share square icon"></i>
               Share
