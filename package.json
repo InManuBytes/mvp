@@ -45,8 +45,10 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "html2canvas": "^1.0.0-rc.5",
     "ibm-watson": "^5.4.0",
     "lodash": "^4.17.15",
+    "multer": "^1.4.2",
     "spelling": "^2.0.2",
     "twitter": "^1.7.1"
   }
