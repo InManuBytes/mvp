@@ -40,8 +40,13 @@ class App extends Component {
   }
 
   postHaiku() {
-    const { server } = this.props;
-    server.postHaiku()
+    const { server, makeHaikuCard } = this.props;
+    const { haiku, author } = this.state;
+    makeHaikuCard()
+      .then(imageBlob => {
+        console.log('2. sending haiku data back to server');
+        return server.postHaiku(imageBlob, haiku, author)
+      })
       .then(postData => {
         console.log(postData);
       })
@@ -52,7 +57,7 @@ class App extends Component {
     return (
       <div className="column" style={{ maxWidth: 450 }}>
         {/* haiku card */}
-        <div className="ui fluid raised card">
+        <div className="ui fluid raised card" id="haiku-card">
           <div className="content">
             {/* haiku */}
             <div className="ui grey inverted basic padded segment">
