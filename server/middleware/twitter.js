@@ -24,7 +24,7 @@ const getTweets = (req, res, next) => {
     screen_name: twitterHandle,
     count: 200
   };
-  appClient.get('statuses/user_timeline', params, function(error, tweets, response) {
+  appClient.get('statuses/user_timeline', params, (error, tweets, response) => {
     if (error) {
       // send back in the response and don't process req
       res.status(404).send(new Error('Could not get tweets for twitterHandle'));
@@ -38,18 +38,42 @@ const getTweets = (req, res, next) => {
       next();
     }
   });
-}
+};
+
+const uploadHaikuImage = (req, res, next) => {
+  // in order to share an image we have to save it in twitters servers
+  console.log('uploading image to twitter');
+  // the raw binary file is in the buffer
+  const rawImage = req.file.buffer;
+  // upload media to twitter
+  const params = {
+    media: rawImage,
+    total_bytes: req.file.size,
+  };
+  userClient.post('media/upload', params, (error, media, response) => {
+    if (!error) {
+      const mediaId = media.media_id_string;
+      req.media_id = mediaId;
+      next();
+    } else {
+      res.status(404).send(new Error('Could not upload media to twitter'));
+    }
+  })
+};
 
 const postHaiku = (req, res, next) => {
-  console.log('posting to twitter')
-  userClient.post('statuses/update', {status: 'Hello World'}, function(error, tweet, response) {
+  console.log('posting tweet with media_id: ', req.media_id);
+  const params = {
+    status: 'Newest shared #haiku',
+    media_ids: req.media_id,
+  }
+  userClient.post('statuses/update', params, function(error, tweet, response) {
     if (!error) {
-      console.log(tweet);
       res.status(201).json(tweet);
     } else {
-      console.log(error)
+      res.status(404).send(new Error('Could not tweet image'));
     }
   });
-}
+};
 
-module.exports = { getTweets, postHaiku };
+module.exports = { getTweets, uploadHaikuImage, postHaiku };
