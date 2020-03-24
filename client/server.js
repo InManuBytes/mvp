@@ -6,6 +6,21 @@ const Server = {
     return fetch(searchURL)
       .then(result =>  result.json())
       .catch(err => console.log('ERROR WITH REQ', err));
+  },
+  postHaiku: (imageBlob, haiku, author) => {
+    const postURL = `${Server.address}/share`;
+    const formData = new FormData();
+    // create the form data to send to server
+    formData.append('haiku', haiku);
+    formData.append('author', author);
+    formData.append('haikuCard', imageBlob, 'haikuCard.png');
+    const postOptions = {
+      method: 'post',
+      body: formData
+    };
+    return fetch(postURL, postOptions)
+      .then(result => result.json())
+      .catch(err => console.log('ERROR POSTING ', err));
   }
 }
 
