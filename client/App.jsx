@@ -3,6 +3,7 @@ import { trackPromise } from 'react-promise-tracker';
 import HaikuLoadingIndicator from './Loading';
 import ShareModal from './ShareModal';
 import Menu from './Menu';
+import Input from './Input';
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,16 @@ class App extends Component {
       clickedShare: 0,
       composeText: 'Contacting the muses',
       shareText: 'Testing your zen',
-      pages: ['Home', 'About'],
+      pages: [
+        {
+          name: 'Home',
+          active: true
+        },
+        {
+          name: 'About',
+          active: false
+        }
+      ],
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
@@ -25,6 +35,7 @@ class App extends Component {
     this.postHaiku = this.postHaiku.bind(this);
     this.showShareModal = this.showShareModal.bind(this);
     this.closeShareModal = this.closeShareModal.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
   onInputChange(e) {
@@ -86,6 +97,7 @@ class App extends Component {
       <div className="column" style={{ maxWidth: 450 }}>
         {/* haiku card */}
         <div className="ui fluid raised card" id="haiku-card">
+          {/* TODO refactor */}
           <div className="content">
             {/* haiku */}
             <div className="ui grey inverted basic padded segment">
@@ -122,14 +134,18 @@ class App extends Component {
     );
   }
 
+  changePage() {
+
+  }
+
   render() {
-    const { showHaiku, cardURL, composeText } = this.state;
+    const { showHaiku, cardURL, composeText, pages } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* user interaction */}
         <div className="column" style={{ maxWidth: 450 }}>
           <div className="ui segment">
-            <Menu />
+            <Menu pages={pages} onClick={this.changePage} />
             <div className="ui one column centered grid">
               {/* Title header */}
               <div className="column">
@@ -143,30 +159,11 @@ class App extends Component {
                   </h1>
                 </div>
               </div>
-              <div className="column">
-                {/* user input */}
-                <div className="row">
-                  <div className="ui basic center aligned segment">
-                    <div className="ui search">
-                      <div className="ui left icon input focus" data-tooltip="Enter a public Twitter handle to begin">
-                        <i className="at icon" />
-                        <input className="prompt" type="text" placeholder="Twitter Handle" onChange={this.onInputChange} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Generate haiku button or loading while generating tweets */}
-                <div className="row">
-                  <div className="ui basic center aligned segment">
-                    {/* Button or Loading */}
-                    <HaikuLoadingIndicator onClick={this.getTweets} area='compose-button' loadingText={composeText} buttonText="Compose haiku" buttonClass="ui large button" iconClass="feather icon" />
-                  </div>
-                </div>
-              </div>
+              <Input inputChange={this.onInputChange} getTweets={this.getTweets} composeText={composeText} />
             </div>
           </div>
         </div>
-        {/* Generated haku only generate if there is data to generate */}
+        {/* Generated haiku only generate if there is data to generate */}
         {showHaiku ? this.renderHaiku() : null}
       </div>
     );
