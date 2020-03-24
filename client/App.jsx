@@ -19,16 +19,8 @@ class App extends Component {
       clickedShare: 0,
       composeText: 'Contacting the muses',
       shareText: 'Testing your zen',
-      pages: [
-        {
-          name: 'Home',
-          active: true
-        },
-        {
-          name: 'About',
-          active: false
-        }
-      ],
+      pages: ['Home', 'About'],
+      activePage: 'Home',
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
@@ -135,30 +127,28 @@ class App extends Component {
     );
   }
 
-  changePage(e) {
-    console.log(e.target.key);
+  changePage(page) {
+    console.log('Change to ', page)
+    this.setState({ activePage: page });
   }
 
   renderActivePage() {
-    const { composeText, pages } = this.state;
-    const activePage = pages.filter(page => {
-      return page.active;
-    });
-    if (activePage[0].name === 'Home') {
+    const { composeText, activePage } = this.state;
+    if (activePage === 'Home') {
       return <Input inputChange={this.onInputChange} getTweets={this.getTweets} composeText={composeText} />
-    } else if (activePage[0].name === 'About') {
+    } else if (activePage === 'About') {
       return <About />
     }
   }
 
   render() {
-    const { showHaiku, cardURL, pages } = this.state;
+    const { showHaiku, cardURL, pages, activePage } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* Layout TODO refactor*/}
         <div className="column" style={{ maxWidth: 450 }}>
           <div className="ui segment">
-            <Menu pages={pages} onClick={this.changePage} />
+            <Menu pages={pages} active={activePage} onClick={this.changePage} />
             <div className="ui one column centered grid">
               {/* Title header */}
               <div className="column">
