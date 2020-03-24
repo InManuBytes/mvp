@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   renderHaiku() {
-    const { haiku, author } = this.state;
+    const { haiku, author, showShareModal, cardURL } = this.state;
     return (
       <div className="column" style={{ maxWidth: 450 }}>
         {/* haiku card */}
@@ -107,13 +107,18 @@ class App extends Component {
               </div>
             </div>
           </div>
+          <ShareModal show={showShareModal} url={cardURL} close={this.closeShareModal} author={author} />
         </div>
+        <button className="ui fluid white button" onClick={this.postHaiku}>
+          <i className="share square icon"></i>
+          Share
+        </button>
       </div>
     );
   }
 
   render() {
-    const { showHaiku, showShareModal, cardURL } = this.state;
+    const { showHaiku, cardURL } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* user interaction */}
@@ -153,11 +158,6 @@ class App extends Component {
                 </div>
               </div>
             </div>
-            <ShareModal show={showShareModal} url={cardURL} close={this.closeShareModal} />
-            <button className="ui fluid blue basic button" onClick={this.postHaiku}>
-              <i className="share square icon"></i>
-              Share
-            </button>
           </div>
         </div>
         {/* Generated haku only generate if there is data to generate */}
