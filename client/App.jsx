@@ -128,7 +128,6 @@ class App extends Component {
   }
 
   changePage(page) {
-    console.log('Change to ', page)
     this.setState({ activePage: page });
   }
 
