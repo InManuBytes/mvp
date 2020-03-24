@@ -19,7 +19,7 @@ class ShareModal extends React.Component {
   render() {
     const { show, url, author } = this.props;
     const { hashtag, title } = this.state;
-    const text = `${title}@${author}${hashtag}`;
+    const text = `${title} @${author} ${hashtag}`;
     if (!show) {
       return null;
     }
