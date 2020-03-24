@@ -17,6 +17,8 @@ app.use(express.static(__dirname + '/../public'));
 
 app.get('/haikus/:user', twitter.getTweets, watson.analyzeTweets, controller.getHaiku);
 // when a user wants to share a tweet-ku we have to process the file first
+// TODO save haiku tweet id, image url in server to be the first check
+// so no duplicate tweets sent to account
 app.post('/haikus/share', upload.single('haikuCard'), twitter.uploadHaikuImage, twitter.postHaiku)
 
 app.listen(8080, function() {
