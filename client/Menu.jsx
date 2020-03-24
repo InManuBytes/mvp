@@ -19,12 +19,12 @@ class Menu extends React.Component {
 
   render() {
     const { links } = this.state;
-    const { pages } = this.props
+    const { pages, onClick, active } = this.props
     return (
       <div className="ui secondary pointing menu">
         {pages.map(page => {
-          const className = page.active ? 'active item' : 'item';
-          return <a key={page.name} className={className}>{page.name}</a>;
+          const className = (page === active) ? 'active item' : 'item';
+          return <a key={page} className={className} onClick={() => onClick(page)}>{page}</a>;
         })}
         <div className="right menu">
           {links.map(link => {
