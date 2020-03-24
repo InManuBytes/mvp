@@ -13,26 +13,25 @@ class Menu extends React.Component {
           name: 'github',
           url: 'https://github.com/manuelag19'
         }
-      ]
+      ],
     }
   }
 
   render() {
     const { links } = this.state;
+    const { pages } = this.props
     return (
       <div className="ui secondary pointing menu">
-        <a className="active item">
-          Home
-        </a>
-        <a className="item">
-          About
-        </a>
+        {pages.map(page => {
+          const className = page.active ? 'active item' : 'item';
+          return <a key={page.name} className={className}>{page.name}</a>;
+        })}
         <div className="right menu">
           {links.map(link => {
             const aclassName = `ui ${link.name} item`;
             const iclassName = `ui ${link.name} icon`;
             return (
-              <a className={aclassName} href={link.url} target="_blank">
+              <a key={link.name} className={aclassName} href={link.url} target="_blank">
                 <i className={iclassName}></i>
               </a>
             )
