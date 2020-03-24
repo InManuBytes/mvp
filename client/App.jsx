@@ -4,6 +4,7 @@ import HaikuLoadingIndicator from './Loading';
 import ShareModal from './ShareModal';
 import Menu from './Menu';
 import Input from './Input';
+import About from './About';
 
 class App extends Component {
   constructor(props) {
@@ -134,15 +135,27 @@ class App extends Component {
     );
   }
 
-  changePage() {
+  changePage(e) {
+    console.log(e.target.key);
+  }
 
+  renderActivePage() {
+    const { composeText, pages } = this.state;
+    const activePage = pages.filter(page => {
+      return page.active;
+    });
+    if (activePage[0].name === 'Home') {
+      return <Input inputChange={this.onInputChange} getTweets={this.getTweets} composeText={composeText} />
+    } else if (activePage[0].name === 'About') {
+      return <About />
+    }
   }
 
   render() {
-    const { showHaiku, cardURL, composeText, pages } = this.state;
+    const { showHaiku, cardURL, pages } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
-        {/* user interaction */}
+        {/* Layout TODO refactor*/}
         <div className="column" style={{ maxWidth: 450 }}>
           <div className="ui segment">
             <Menu pages={pages} onClick={this.changePage} />
@@ -159,7 +172,7 @@ class App extends Component {
                   </h1>
                 </div>
               </div>
-              <Input inputChange={this.onInputChange} getTweets={this.getTweets} composeText={composeText} />
+              {this.renderActivePage()}
             </div>
           </div>
         </div>
