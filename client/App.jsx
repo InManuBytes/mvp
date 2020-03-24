@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { trackPromise } from 'react-promise-tracker';
 import HaikuLoadingIndicator from './Loading';
 import ShareModal from './ShareModal';
+import Menu from './Menu';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class App extends Component {
       showShareModal: false,
       clickedShare: 0,
       composeText: 'Contacting the muses',
-      shareText: 'Testing your zen'
+      shareText: 'Testing your zen',
+      pages: ['Home', 'About'],
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
@@ -127,6 +129,7 @@ class App extends Component {
         {/* user interaction */}
         <div className="column" style={{ maxWidth: 450 }}>
           <div className="ui segment">
+            <Menu />
             <div className="ui one column centered grid">
               {/* Title header */}
               <div className="column">
