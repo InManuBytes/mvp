@@ -113,7 +113,9 @@ class App extends Component {
           </div>
           <ShareModal show={showShareModal} url={cardURL} close={this.closeShareModal} author={author} />
         </div>
-        <HaikuLoadingIndicator onClick={this.postHaiku} area="share-button" loadingText={shareText} buttonText="Share" buttonClass="ui fluid white button" iconClass="share square icon" />
+        {showShareModal ? null :
+          <HaikuLoadingIndicator onClick={this.postHaiku} area="share-button" loadingText={shareText} buttonText="Share" buttonClass="ui fluid white button" iconClass="share square icon" />
+        }
       </div>
     );
   }
