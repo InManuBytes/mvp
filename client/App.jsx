@@ -14,6 +14,8 @@ class App extends Component {
       cardURL: '',
       showShareModal: false,
       clickedShare: 0,
+      composeText: 'Contacting the muses',
+      shareText: 'Testing your zen'
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
@@ -42,13 +44,14 @@ class App extends Component {
           }
           this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0 });
         })
-        .catch(err => console.log(err)));
+        .catch(err => console.log(err)),'compose-button');
   }
 
   postHaiku() {
     const { server, makeHaikuCard } = this.props;
     const { haiku, author, clickedShare, cardURL } = this.state;
     if (!clickedShare) {
+      trackPromise(
       makeHaikuCard()
         .then(imageBlob => {
           console.log('2. sending haiku data back to server');
@@ -59,6 +62,7 @@ class App extends Component {
           console.log('Got image url: ', cardURL);
           this.showShareModal(cardURL);
         })
+        .catch(err => console.log(err)),'share-button');
     } else {
       this.showShareModal(cardURL);
     }
@@ -75,7 +79,7 @@ class App extends Component {
   }
 
   renderHaiku() {
-    const { haiku, author, showShareModal, cardURL } = this.state;
+    const { haiku, author, showShareModal, cardURL, shareText } = this.state;
     return (
       <div className="column" style={{ maxWidth: 450 }}>
         {/* haiku card */}
@@ -109,16 +113,13 @@ class App extends Component {
           </div>
           <ShareModal show={showShareModal} url={cardURL} close={this.closeShareModal} author={author} />
         </div>
-        <button className="ui fluid white button" onClick={this.postHaiku}>
-          <i className="share square icon"></i>
-          Share
-        </button>
+        <HaikuLoadingIndicator onClick={this.postHaiku} area="share-button" loadingText={shareText} buttonText="Share" buttonClass="ui fluid white button" iconClass="share square icon" />
       </div>
     );
   }
 
   render() {
-    const { showHaiku, cardURL } = this.state;
+    const { showHaiku, cardURL, composeText } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* user interaction */}
@@ -153,7 +154,7 @@ class App extends Component {
                 <div className="row">
                   <div className="ui basic center aligned segment">
                     {/* Button or Loading */}
-                    <HaikuLoadingIndicator onClick={this.getTweets} />
+                    <HaikuLoadingIndicator onClick={this.getTweets} area='compose-button' loadingText={composeText} buttonText="Compose haiku" buttonClass="ui large button" iconClass="feather icon" />
                   </div>
                 </div>
               </div>
