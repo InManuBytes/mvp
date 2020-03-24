@@ -1,10 +1,12 @@
 import React from 'react';
+import { TwitterButton } from "react-social";
 
 class ShareModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      hashtag: '#haiku',
+      title: 'Latest tweet-ku from'
     }
     this.closeModal = this.closeModal.bind(this);
   }
@@ -15,27 +17,25 @@ class ShareModal extends React.Component {
   }
 
   render() {
-    const { show } = this.props;
+    const { show, url, author } = this.props;
+    const { hashtag, title } = this.state;
+    const text = `${title}@${author}${hashtag}`;
     if (!show) {
       return null;
     }
     return (
-      <div class="ui active modal">
-        <i class="close icon" onClick={this.closeModal}></i>
-        <div class="header">
-          Modal Title
-        </div>
-        <div class="image content">
-          <div class="image">
-            An image can appear on left or an icon
+      <div className="ui active dimmer">
+        <div className="content">
+          <div class="ui container">
+          <i className="large times circle outline icon" onClick={this.closeModal} />
           </div>
-          <div class="description">
-            A description can appear on the right
-          </div>
-        </div>
-        <div class="actions">
-          <div class="ui button">Cancel</div>
-          <div class="ui button">OK</div>
+          <p></p>
+          <p>
+            <TwitterButton url={url} message={text} class="ui twitter button">
+              <i class="twitter icon"></i>
+              Twitter
+            </TwitterButton>
+          </p>
         </div>
       </div>
     );
