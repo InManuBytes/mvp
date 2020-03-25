@@ -26,13 +26,13 @@ class ShareModal extends React.Component {
     return (
       <div className="ui active dimmer">
         <div className="content">
-          <div class="ui container">
+          <div className="ui container">
           <i className="large times circle outline icon" onClick={this.closeModal} />
           </div>
           <p></p>
           <p>
             <TwitterButton url={url} message={text} class="ui twitter button">
-              <i class="twitter icon"></i>
+              <i className="twitter icon"></i>
               Twitter
             </TwitterButton>
           </p>

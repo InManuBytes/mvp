@@ -5,7 +5,7 @@ const Server = {
     const searchURL = Server.address + queryString;
     return fetch(searchURL)
       .then(result =>  result.json())
-      .catch(err => console.log('ERROR WITH REQ', err));
+      .catch(err => err.json());
   },
   postHaiku: (imageBlob, haiku, author) => {
     const postURL = `${Server.address}/share`;
@@ -20,7 +20,7 @@ const Server = {
     };
     return fetch(postURL, postOptions)
       .then(result => result.json())
-      .catch(err => console.log('ERROR POSTING ', err));
+      .catch(err => err);
   }
 }
 

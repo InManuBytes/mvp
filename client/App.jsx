@@ -21,6 +21,7 @@ class App extends Component {
       shareText: 'Testing your zen',
       pages: ['Home', 'About'],
       activePage: 'Home',
+      error: ''
     };
     this.onInputChange = this.onInputChange.bind(this);
     this.getTweets = this.getTweets.bind(this);
@@ -41,14 +42,15 @@ class App extends Component {
     trackPromise(
       server.getHaiku(twitterHandle)
         .then(haikuData => {
-          console.log(haikuData);
           let latestHaiku = haikuData.haiku;
           let author = haikuData.user;
-          if (haikuData.status === 400) {
-            latestHaiku = [`${haikuData.code} ERROR: ${haikuData.statusText}`, haikuData.message];
-            author = 'IBM WATSON';
+          let error = '';
+          if (haikuData.code === 404) {
+            latestHaiku = [`${haikuData.code} ERROR:`, haikuData.message];
+            error = haikuData.code;
+            author = 'ERROR';
           }
-          this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0 });
+          this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0, error });
         })
         .catch(err => console.log(err)),'compose-button');
   }
@@ -60,12 +62,10 @@ class App extends Component {
       trackPromise(
       makeHaikuCard()
         .then(imageBlob => {
-          console.log('2. sending haiku data back to server');
           return server.postHaiku(imageBlob, haiku, author)
         })
         .then(postData => {
           const cardURL = postData.entities.media[0].url;
-          console.log('Got image url: ', cardURL);
           this.showShareModal(cardURL);
         })
         .catch(err => console.log(err)),'share-button');
@@ -75,7 +75,6 @@ class App extends Component {
   }
 
   showShareModal(cardURL) {
-    console.log('rendering modal for: ', cardURL)
     const { clickedShare } = this.state;
     this.setState({ showShareModal: true, cardURL, clickedShare: clickedShare + 1 })
   }
@@ -85,7 +84,7 @@ class App extends Component {
   }
 
   renderHaiku() {
-    const { haiku, author, showShareModal, cardURL, shareText } = this.state;
+    const { haiku, author, showShareModal, cardURL, shareText, error } = this.state;
     return (
       <div className="column" style={{ maxWidth: 450 }}>
         {/* haiku card */}
@@ -99,9 +98,9 @@ class App extends Component {
                   <div className="ui left floated">
                     <i className="quote left icon" />
                   </div>
-                  {haiku.map((line, idx) => {
+                  {haiku ? haiku.map((line, idx) => {
                     return <div key={idx} className="item">{line}</div>
-                  })}
+                  }) : null}
                   <div className="ui right floated">
                     <i className="quote right icon" />
                   </div>
@@ -132,16 +131,16 @@ class App extends Component {
   }
 
   renderActivePage() {
-    const { composeText, activePage } = this.state;
+    const { composeText, activePage, haiku, error } = this.state;
     if (activePage === 'Home') {
-      return <Input inputChange={this.onInputChange} getTweets={this.getTweets} composeText={composeText} />
+      return <Input inputChange={this.onInputChange} getTweets={this.getTweets} composeText={composeText} error={error} message={haiku[1]} />
     } else if (activePage === 'About') {
       return <About />
     }
   }
 
   render() {
-    const { showHaiku, cardURL, pages, activePage } = this.state;
+    const { showHaiku, cardURL, pages, activePage, error } = this.state;
     return (
       <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
         {/* Layout TODO refactor*/}
@@ -166,7 +165,7 @@ class App extends Component {
           </div>
         </div>
         {/* Generated haiku only generate if there is data to generate */}
-        {showHaiku ? this.renderHaiku() : null}
+        {(showHaiku && !error) ? this.renderHaiku() : null}
       </div>
     );
   }

@@ -38,7 +38,6 @@ const searchDictionary = (word) => {
 
 module.exports = {
   getHaiku(req, res, next) {
-    console.log('generating haiku');
     const { analysis } = req;
     const { subjects, objects, actions } = analysis;
     /**

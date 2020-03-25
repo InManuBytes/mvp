@@ -57,8 +57,7 @@ const analyzeTweets = (req, res, next) => {
     next();
   })
   .catch(err => {
-    console.log(err);
-    res.status(404).json(err);
+    res.status(404).json({ message: 'Error analyzing tweets', code: 404, statusText: 'Bad Request' });
   });
 }
 

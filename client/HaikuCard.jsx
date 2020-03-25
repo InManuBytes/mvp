@@ -10,7 +10,6 @@ const promiseToBlob = (canvas) => {
 }
 
 const makeHaikuCard = () => {
-  console.log('1. making haiku card');
   const card = document.getElementById('haiku-card');
   return html2canvas(card)
     .then((canvas) => promiseToBlob(canvas))

@@ -1,11 +1,13 @@
 import React from 'react';
 import HaikuLoadingIndicator from './Loading';
 
-const Input = ({inputChange, getTweets, composeText }) => (
+const Input = ({inputChange, getTweets, composeText, message, error }) => (
   <div className="column">
     {/* user input */}
     <div className="row">
       <div className="ui basic center aligned segment">
+        {/* Generate error if any */}
+        {error ? <span className="ui red text">{message}</span> : null}
         <div className="ui search">
           <div className="ui left icon input focus" data-tooltip="Enter a public Twitter handle to begin">
             <i className="at icon" />

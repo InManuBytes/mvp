@@ -19,20 +19,19 @@ var userClient = new Twitter(userAuth);
 
 const getTweets = (req, res, next) => {
   const twitterHandle = req.params.user
-  console.log('getting tweets for', twitterHandle);
   const params = {
     screen_name: twitterHandle,
     count: 200
   };
   appClient.get('statuses/user_timeline', params, (error, tweets, response) => {
-    if (error) {
+    // tweets come back in an array, so we want to filter out for text
+    const tweetTexts = tweets ? tweets.map((tweetObj) => {
+      return tweetObj.text
+    }) : [];
+    if (error || tweets.length === 0) {
       // send back in the response and don't process req
-      res.status(404).send(new Error('Could not get tweets for twitterHandle'));
+      res.status(404).json({ message: 'Error getting tweets', code: 404, statusText: 'Bad Request' });
     } else {
-      // tweets come back in an array, so we want to filter out for text
-      const tweetTexts = tweets.map((tweetObj) => {
-        return tweetObj.text
-      })
       // attach them to the request for the next step
       req.tweets = tweetTexts.join('. ');
       next();
@@ -42,7 +41,6 @@ const getTweets = (req, res, next) => {
 
 const uploadHaikuImage = (req, res, next) => {
   // in order to share an image we have to save it in twitters servers
-  console.log('uploading image to twitter');
   // the raw binary file is in the buffer
   const rawImage = req.file.buffer;
   // upload media to twitter
@@ -56,13 +54,12 @@ const uploadHaikuImage = (req, res, next) => {
       req.media_id = mediaId;
       next();
     } else {
-      res.status(404).send(new Error('Could not upload media to twitter'));
+      res.status(502).json({ message: 'Could not upload data to twitter', code: 502, statusText: 'Bad Gateway' })
     }
   })
 };
 
 const postHaiku = (req, res, next) => {
-  console.log('posting tweet with media_id: ', req.media_id);
   const params = {
     status: 'Newest shared #haiku',
     media_ids: req.media_id,
@@ -71,7 +68,7 @@ const postHaiku = (req, res, next) => {
     if (!error) {
       res.status(201).json(tweet);
     } else {
-      res.status(404).send(new Error('Could not tweet image'));
+      res.status(502).json({ message: 'Could not tweet image', code: 502, statusText: 'Bad Gateway' })
     }
   });
 };
