@@ -24,14 +24,14 @@ const getTweets = (req, res, next) => {
     count: 200
   };
   appClient.get('statuses/user_timeline', params, (error, tweets, response) => {
-    // tweets come back in an array, so we want to filter out for text
-    const tweetTexts = tweets ? tweets.map((tweetObj) => {
-      return tweetObj.text
-    }) : [];
-    if (error || tweets.length === 0) {
+    if (error) {
       // send back in the response and don't process req
       res.status(404).json({ message: 'Error getting tweets', code: 404, statusText: 'Bad Request' });
     } else {
+      // tweets come back in an array, so we want to filter out for text
+      const tweetTexts = tweets.map((tweetObj) => {
+        return tweetObj.text
+      })
       // attach them to the request for the next step
       req.tweets = tweetTexts.join('. ');
       next();

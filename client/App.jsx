@@ -155,9 +155,11 @@ class App extends Component {
                     <i className="crow icon"></i>
                     <div className="content">
                       Tweet-Ku
-                      <div className="sub header">Tweet-powered AI haiku generator</div>
+                      <div className="sub header">Tweet-powered AI haiku generator
+                      </div>
                     </div>
                   </h1>
+                  <i className="creative commons icon"></i>
                 </div>
               </div>
               {this.renderActivePage()}

@@ -14,6 +14,11 @@ const About = () => (
     <span className="ui grey text">
       A haiku from your tweets might spark joy, or you might even find that you have a soul after all.
     </span>
+    <p></p>
+    <p>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style={{borderWidth:0}} src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+
+    </p>
   </div>
 )
 
