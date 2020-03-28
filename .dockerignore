@@ -6,9 +6,11 @@ ibm-credentials.env
 client
 semantic-ui
 webpack.config.js
+.babelrc
 
 # Dev related
 data
+compress.js
 
 # Generated Files
 package-lock.json
