@@ -1,0 +1,18 @@
+# Deployment
+.env
+ibm-credentials.env
+
+# Source Files
+client
+semantic-ui
+webpack.config.js
+
+# Dev related
+data
+
+# Generated Files
+package-lock.json
+.vscode
+
+# Guides
+_PRESS-RELEASE.md

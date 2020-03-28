@@ -8,6 +8,7 @@
     "dev:start": "json-server --watch ./data/db.json",
     "dev:build": "webpack -d --watch",
     "dev:server": "nodemon server/index.js",
+    "start": "node server/index.js",
     "build": "webpack -p",
     "compress": "node compress.js"
   },
@@ -31,6 +32,7 @@
     "@babel/preset-react": "^7.8.3",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
+    "express-static-gzip": "^2.0.6",
     "fomantic-ui-less": "^2.8.4",
     "json-server": "^0.16.1",
     "less": "^3.11.1",
