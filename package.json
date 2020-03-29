@@ -8,7 +8,7 @@
     "dev:start": "json-server --watch ./data/db.json",
     "dev:build": "webpack -d --watch",
     "dev:server": "nodemon server/index.js",
-    "start": "node server/index.js",
+    "start-docker": "node server/index.js",
     "build": "webpack -p && node compress.js",
     "compress": "node compress.js"
   },
