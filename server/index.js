@@ -14,6 +14,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// uncomment for development
+// app.use(express.static(__dirname + '/../public'));
 app.use('/', expressStaticGzip(__dirname + '/../public'));
 
 app.get('/haikus/:user', twitter.getTweets, watson.analyzeTweets, controller.getHaiku);
