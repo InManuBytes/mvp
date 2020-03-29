@@ -41,6 +41,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-promise-tracker": "^2.1.0",
+    "react-scroll": "^1.7.16",
     "react-share": "^4.1.0",
     "react-social": "^1.10.0",
     "style-loader": "^1.1.3",

@@ -5,6 +5,7 @@ import ShareModal from './ShareModal';
 import Menu from './Menu';
 import Input from './Input';
 import About from './About';
+import { animateScroll as scroll, Element } from 'react-scroll';
 
 class App extends Component {
   constructor(props) {
@@ -85,8 +86,9 @@ class App extends Component {
 
   renderHaiku() {
     const { haiku, author, showShareModal, cardURL, shareText, error } = this.state;
+    scroll.scrollToBottom();
     return (
-      <div className="column" style={{ maxWidth: 450 }}>
+      <Element name="haiku-card" className="ui basic fluid segment">
         {/* haiku card */}
         <div className="ui fluid raised card" id="haiku-card">
           {/* TODO refactor */}
@@ -122,7 +124,7 @@ class App extends Component {
         {showShareModal ? null :
           <HaikuLoadingIndicator onClick={this.postHaiku} area="share-button" loadingText={shareText} buttonText="Share" buttonClass="ui fluid white button" iconClass="share square icon" />
         }
-      </div>
+      </Element>
     );
   }
 
@@ -142,12 +144,11 @@ class App extends Component {
   render() {
     const { showHaiku, cardURL, pages, activePage, error } = this.state;
     return (
-      <div className="ui middle aligned one column centered grid" style={{ height: '100vh' }}>
+      <div className="ui fluid container">
         {/* Layout TODO refactor*/}
-        <div className="column" style={{ maxWidth: 450 }}>
-          <div className="ui segment">
+          <div className="ui padded segment">
             <Menu pages={pages} active={activePage} onClick={this.changePage} />
-            <div className="ui one column centered grid">
+            <div className="ui two column stackable grid">
               {/* Title header */}
               <div className="column">
                 <div className="ui basic center aligned segment">
@@ -160,13 +161,12 @@ class App extends Component {
                     </div>
                   </h1>
                 </div>
+                {this.renderActivePage()}
               </div>
-              {this.renderActivePage()}
+              {/* Generated haiku only generate if there is data to generate */}
+              {(showHaiku && !error) ? this.renderHaiku() : null}
             </div>
           </div>
-        </div>
-        {/* Generated haiku only generate if there is data to generate */}
-        {(showHaiku && !error) ? this.renderHaiku() : null}
       </div>
     );
   }
