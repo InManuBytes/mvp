@@ -112,8 +112,8 @@ class App extends Component {
             {/* author */}
             <div className="extra content">
               <div className="right aligned author">
-                <i className="ui crow icon" />
-                {author}
+              <img className="ui mini image" src="/images/icons/crow_black.png" />
+                @{author}
               </div>
             </div>
           </div>
@@ -151,15 +151,14 @@ class App extends Component {
               {/* Title header */}
               <div className="column">
                 <div className="ui basic center aligned segment">
-                  <h1 className="ui icon header">
-                    <i className="crow icon"></i>
+                  <img className="ui small circular centered image" src="/images/icons/crow_white.png" />
+                  <h1 className="ui header">
                     <div className="content">
                       Tweet-Ku
-                      <div className="sub header">Tweet-powered AI haiku generator
-                      </div>
+                      <i className="creative commons icon"></i>
+                      <div className="sub header">Tweet-powered AI haiku generator</div>
                     </div>
                   </h1>
-                  <i className="creative commons icon"></i>
                 </div>
               </div>
               {this.renderActivePage()}
