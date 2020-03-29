@@ -1,5 +1,10 @@
 ### node ###
 
+# Dev folders
+semantic-ui
+data
+client
+
 # API key
 .env
 ibm-credentials.env

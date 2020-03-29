@@ -1,4 +1,5 @@
 const express = require('express');
+const PORT = process.env.PORT || 8080;
 const expressStaticGzip = require("express-static-gzip");
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -24,6 +25,6 @@ app.get('/haikus/:user', twitter.getTweets, watson.analyzeTweets, controller.get
 // so no duplicate tweets sent to account
 app.post('/haikus/share', upload.single('haikuCard'), twitter.uploadHaikuImage, twitter.postHaiku)
 
-app.listen(8080, function() {
+app.listen(PORT, function() {
   console.log('listening on port 8080!');
 });

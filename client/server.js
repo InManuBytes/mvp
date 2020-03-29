@@ -1,5 +1,5 @@
 const Server = {
-  address: 'http://localhost:8080/haikus',
+  address: 'https://tweet-ku.herokuapp.com/haikus',
   getHaiku: (user) => {
     const queryString = `/${user}`;
     const searchURL = Server.address + queryString;
