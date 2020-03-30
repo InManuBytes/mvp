@@ -21,21 +21,23 @@ class Menu extends React.Component {
     const { links } = this.state;
     const { pages, onClick, active } = this.props
     return (
-      <div className="ui secondary pointing menu">
-        {pages.map(page => {
-          const className = (page === active) ? 'active item' : 'item';
-          return <a key={page} className={className} onClick={() => onClick(page)}>{page}</a>;
-        })}
-        <div className="right menu">
-          {links.map(link => {
-            const aclassName = `ui ${link.name} item`;
-            const iclassName = `ui ${link.name} icon`;
-            return (
-              <a key={link.name} className={aclassName} href={link.url} target="_blank">
-                <i className={iclassName}></i>
-              </a>
-            )
+      <div className="ui fluid container">
+        <div className="ui secondary pointing menu">
+          {pages.map(page => {
+            const className = (page === active) ? 'active item' : 'item';
+            return <a key={page} className={className} onClick={() => onClick(page)}>{page}</a>;
           })}
+          <div className="right menu">
+            {links.map(link => {
+              const aclassName = `ui ${link.name} item`;
+              const iclassName = `ui ${link.name} icon`;
+              return (
+                <a key={link.name} className={aclassName} href={link.url} target="_blank">
+                  <i className={iclassName}></i>
+                </a>
+              )
+            })}
+          </div>
         </div>
       </div>
     )

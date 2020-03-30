@@ -88,15 +88,15 @@ class App extends Component {
     const { haiku, author, showShareModal, cardURL, shareText, error } = this.state;
     scroll.scrollToBottom();
     return (
-      <Element name="haiku-card" className="ui basic fluid segment">
+      <Element name="haiku-card" className="ui basic segment" style={{ width: '400px'}}>
         {/* haiku card */}
         <div className="ui fluid raised card" id="haiku-card">
-          {/* TODO refactor */}
           <div className="content">
+            <img className="ui avatar image" src="/images/icons/crow_black.png" />Tweet-ku
             {/* haiku */}
-            <div className="ui grey inverted basic padded segment">
+            <div className="ui grey inverted basic segment" style={{ marginTop: '0px' }}>
               <div className="center aligned description">
-                <div className="ui list" style={{ fontSize: '1.7rem' }}>
+                <div className="ui list" style={{ fontSize: '1.5rem' }}>
                   <div className="ui left floated">
                     <i className="quote left icon" />
                   </div>
@@ -114,7 +114,6 @@ class App extends Component {
             {/* author */}
             <div className="extra content">
               <div className="right aligned author">
-              <img className="ui mini image" src="/images/icons/crow_black.png" />
                 @{author}
               </div>
             </div>
@@ -146,7 +145,7 @@ class App extends Component {
     return (
       <div className="ui fluid container">
         {/* Layout TODO refactor*/}
-          <div className="ui padded segment">
+          <div className="ui basic segment">
             <Menu pages={pages} active={activePage} onClick={this.changePage} />
             <div className="ui two column stackable grid">
               {/* Title header */}

@@ -31,7 +31,7 @@ class ShareModal extends React.Component {
           </div>
           <p></p>
           <p>
-            <TwitterButton url={url} message={text} class="ui twitter button">
+            <TwitterButton url={url} message={text} className="ui twitter button">
               <i className="twitter icon"></i>
               Twitter
             </TwitterButton>
