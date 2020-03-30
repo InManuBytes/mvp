@@ -1,3 +1,43 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+/*******************************
+             Menu
+*******************************/
+
+@background: @darkWhite;
+@boxShadow: none;
+@dividerSize: 0px;
+
+@verticalBoxShadow: 0px 0px 0px 2px @borderColor inset;
+@verticalActiveBoxShadow: none;
+
+@itemVerticalPadding: 1.25em;
+@itemHorizontalPadding: 2em;
+@itemFontWeight: bold;
+
+@activeItemBackground: @white;
+@activeItemTextColor: @white;
+@activeHoverItemBackground: @primaryColorHover;
+@activeHoverItemColor: @white;
+
+@secondaryItemPadding: @relativeSmall @relativeMedium;
+
+@secondaryActiveItemBackground: @primaryColor;
+@secondaryActiveItemColor: @white;
+@secondaryActiveHoverItemBackground: @primaryColorHover;
+@secondaryActiveHoverItemColor: @white;
+
+@secondaryPointingActiveBorderColor: @white;
+@secondaryPointingActiveTextColor: @white;
+
+@arrowSize: 1em;
+@arrowActiveColor: @primaryColor;
+@arrowActiveHoverColor: @primaryColorHover;
+@arrowBorder: transparent;
+
+@paginationActiveBackground: @lightGrey;
+
+@borderColor: @black;
+@tabularBorderWidth: 2px;
