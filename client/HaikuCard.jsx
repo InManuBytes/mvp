@@ -10,10 +10,24 @@ const promiseToBlob = (canvas) => {
 }
 
 const makeHaikuCard = () => {
+  if(screen.width < 1024) {
+    document.getElementById("viewport").setAttribute("content", "width=1200px");
+  }
   const card = document.getElementById('haiku-card');
-  return html2canvas(card)
+  let options = {
+    removeContainer: true,
+    imageTimeout: 15000,
+    loggin: false,
+    useCORS: true
+  };
+  return html2canvas(card, options)
     .then((canvas) => promiseToBlob(canvas))
-    .then(imageBlob => imageBlob)
+    .then(imageBlob => {
+      if(screen.width < 1024) {
+        document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1");
+      }
+      return imageBlob;
+    })
     .catch(err => console.log('html2canvas error ', err))
 }
 

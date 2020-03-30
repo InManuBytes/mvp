@@ -52,7 +52,7 @@ class App extends Component {
             author = 'ERROR';
           }
           scroll.scrollToBottom();
-          this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0, error });
+          this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0, error, showShareModal: false });
         })
         .catch(err => console.log(err)),'compose-button');
   }
@@ -64,6 +64,7 @@ class App extends Component {
       trackPromise(
       makeHaikuCard()
         .then(imageBlob => {
+          scroll.scrollToBottom();
           return server.postHaiku(imageBlob, haiku, author)
         })
         .then(postData => {
