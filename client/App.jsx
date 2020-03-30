@@ -51,6 +51,7 @@ class App extends Component {
             error = haikuData.code;
             author = 'ERROR';
           }
+          scroll.scrollToBottom();
           this.setState({ haiku: latestHaiku, showHaiku: true, author: author, clickedShare: 0, error });
         })
         .catch(err => console.log(err)),'compose-button');
@@ -86,7 +87,6 @@ class App extends Component {
 
   renderHaiku() {
     const { haiku, author, showShareModal, cardURL, shareText, error } = this.state;
-    scroll.scrollToBottom();
     return (
       <Element name="haiku-card" className="ui basic segment" style={{ width: '400px'}}>
         {/* haiku card */}
